@@ -16,6 +16,14 @@ cd ~/dev
 wget http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz
 tar -xzf boost_1_59_0.tar.gz
 rm boost_1_59_0.tar.gz
+git clone --recursive https://git@github.com/georgelorchpercona/myrocks
 git clone --recursive https://git@github.com/percona/percona-server
-git clone --recursive https://git@github.com/facebook/mysql-5.6 fb-mysql-5.6.35
+mkdir percona-server-build-5.6
+mkdir percona-server-build-5.7
+mkdir percona-server-install-5.6
+mkdir percona-server-install-5.7
+mkdir perconaft-build
+git clone --recursive https://git@github.com/facebook/mysql-5.6 facebook-mysql
+mkdir facebook-mysql-build-5.6
+mkdir facebook-mysql-install-5.6
 cd -
