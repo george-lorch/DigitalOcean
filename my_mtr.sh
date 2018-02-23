@@ -9,4 +9,5 @@ if [ -z "$LIBEATMYDATA" ]; then
     echo "****** NO LIBEATMYDATA FOUND ******"
     exit 1
 fi
+
 LD_PRELOAD="${LIBEATMYDATA} ${LIBHOTBACKUP}" ./mtr --force --retry=0 --retry-failure=0 --max-test-fail=0 --testcase-timeout=30 --mysqld=--loose-tokudb-cache-size=512M --parallel=${cpus} $@
