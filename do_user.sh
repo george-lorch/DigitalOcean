@@ -36,8 +36,8 @@ mkdir perconaft-build
 
 git clone --recursive https://git@github.com/facebook/mysql-5.6 facebook-mysql &
 clone3=$!
-mkdir facebook-mysql-build-5.6
-mkdir facebook-mysql-install-5.6
+mkdir facebook-mysql-build
+mkdir facebook-mysql-install
 
 wait_for_pid_to_disappear $clone1
 wait_for_pid_to_disappear $clone2
