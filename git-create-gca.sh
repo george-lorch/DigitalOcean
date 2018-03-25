@@ -11,6 +11,11 @@ usage()
 SERIES=( "5.6" "5.7" )
 FEATURE=$1
 
+if [ -z "${FEATURE}" ]; then
+    usage
+    exit 1
+fi
+
 array_top=$(( ${#SERIES[@]}-1 ))
 upper_version=${SERIES[$array_top]}
 
@@ -25,6 +30,7 @@ done
 
 for series in ${SERIES}; do
     git checkout ${series}
+    git pull
 done
 git checkout ${upper_version}
 git checkout -b ps-${upper_version}-${FEATURE}
