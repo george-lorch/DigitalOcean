@@ -6,6 +6,8 @@ function wait_for_pid_to_disappear() {
     done
 }
 
+ORIG_PWD=${PWD}
+
 ssh-keygen -t rsa -b 4096 -C "george.lorch@percona.com" -f ~/.ssh/id_rsa
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
@@ -22,28 +24,10 @@ cd ~/dev
 wget http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz
 tar -xzf boost_1_59_0.tar.gz
 rm boost_1_59_0.tar.gz
-wget http://dl.bintray.com/boostorg/release/1.65.0/source/boost_1_65_0.tar.gz
+wget http://dl.bintray.com/boostorg/release/2.65.0/source/boost_1_65_0.tar.gz
 tar -xzf boost_1_65_0.tar.gz
 rm boost_1_65_0.tar.gz
 
-git clone --recursive https://git@github.com/georgelorchpercona/myrocks &
-clone1=$!
+git-create-project $@
 
-git clone --recursive https://git@github.com/percona/percona-server &
-clone2=$!
-mkdir percona-server-build-5.6
-mkdir percona-server-build-5.7
-mkdir percona-server-install-5.6
-mkdir percona-server-install-5.7
-mkdir perconaft-build
-
-git clone --recursive https://git@github.com/facebook/mysql-5.6 facebook-mysql &
-clone3=$!
-mkdir facebook-mysql-build
-mkdir facebook-mysql-install
-
-wait_for_pid_to_disappear $clone1
-wait_for_pid_to_disappear $clone2
-wait_for_pid_to_disappear $clone3
-
-cd -
+cd ${ORIG_PWD}

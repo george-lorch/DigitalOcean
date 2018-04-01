@@ -24,5 +24,14 @@ own .ssh
 
 apt-get install git
 cd /home/${my_user}
-git clone https://git@github.com/georgelorchpercona/DigitalOcean bin
-own bin
+git clone https://git@github.com/georgelorchpercona/DigitalOcean do
+own do
+
+mkdir ~/bin
+
+for cmd in `find ~/do -name "*.sh"`; do
+    ln -s $cmd ~/bin
+done
+
+own ~/bin
+own ~/bin/*
