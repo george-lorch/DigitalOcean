@@ -1,5 +1,9 @@
 #!/bin/bash
-cpus=`ncpus`
+if [ -n "${MAX_PARALLEL}" ]; then
+    cpus=${MAX_PARALLEL}
+else
+    cpus=`ncpus`
+fi
 echo "Running on ${cpus} cpus"
 
 chmod +x ./mysql-test-run.pl
