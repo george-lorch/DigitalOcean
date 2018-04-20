@@ -34,10 +34,10 @@ cd ~/dev/${PROJECT}
 ln -s ~/dev/boost_1_59_0
 ln -s ~/dev/boost_1_65_0
 
-git clone --recursive https://git@github.com/georgelorchpercona/myrocks &
+git clone --recursive git@github.com:georgelorchpercona/myrocks &
 clone1=$!
 
-git clone --recursive https://git@github.com/percona/percona-server &
+git clone --recursive git@github.com:percona/percona-server &
 clone2=$!
 mkdir percona-server-build-5.6
 mkdir percona-server-build-5.7
@@ -47,7 +47,7 @@ mkdir percona-server-install-5.7
 mkdir percona-server-install-8.0
 mkdir perconaft-build
 
-git clone --recursive https://git@github.com/facebook/mysql-5.6 facebook-mysql &
+git clone --recursive git@github.com:facebook/mysql-5.6 facebook-mysql &
 clone3=$!
 mkdir facebook-mysql-build
 mkdir facebook-mysql-install
