@@ -24,7 +24,7 @@ cd ~/dev
 wget http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz
 tar -xzf boost_1_59_0.tar.gz
 rm boost_1_59_0.tar.gz
-wget http://dl.bintray.com/boostorg/release/2.65.0/source/boost_1_65_0.tar.gz
+wget http://dl.bintray.com/boostorg/release/1.65.0/source/boost_1_65_0.tar.gz
 tar -xzf boost_1_65_0.tar.gz
 rm boost_1_65_0.tar.gz
 

@@ -19,20 +19,20 @@ if [ -z "${PROJECT}" ]; then
     exit 1
 fi
 
-if [ -d "~/dev/${PROJECT}" ]; then
-    echo "Project ~/dev/${PROJECT} already exists. Aborting"
+if [ -d "./${PROJECT}" ]; then
+    echo "Project ./${PROJECT} already exists. Aborting"
     exit 1
 else
-    echo "Project ~/dev/${PROJECT} does not exist. Proceeding"
+    echo "Project ./${PROJECT} does not exist. Proceeding"
 fi
 
 ORIG_PWD=${PWD}
 
-mkdir ~/dev/${PROJECT}
-cd ~/dev/${PROJECT}
+mkdir ./${PROJECT}
+cd ./${PROJECT}
 
-ln -s ~/dev/boost_1_59_0
-ln -s ~/dev/boost_1_65_0
+ln -s `find ~/ -name boost_1_59_0 -type d | sort -n -s | tail -n 1`
+ln -s `find ~/ -name boost_1_65_0 -type d | sort -n -s | tail -n 1`
 
 git clone --recursive git@github.com:georgelorchpercona/myrocks &
 clone1=$!
@@ -56,13 +56,13 @@ wait_for_pid_to_disappear $clone1
 wait_for_pid_to_disappear $clone2
 wait_for_pid_to_disappear $clone3
 
-cd ~/dev/${PROJECT}/percona-server
+cd ../${PROJECT}/percona-server
 git remote add downstream git@github.com:georgelorchpercona/percona-server
 
-cd ~/dev/${PROJECT}/percona-server/storage/tokudb/PerconaFT
+cd ../${PROJECT}/percona-server/storage/tokudb/PerconaFT
 git remote add downstream git@github.com:georgelorchpercona/PerconaFT
 
-cd ~/dev/${PROJECT}/facebook-mysql
+cd ../${PROJECT}/facebook-mysql
 git remote add downstream git@github.com:georgelorchpercona/mysql-5.6
 
 cd ${ORIG_PWD}
