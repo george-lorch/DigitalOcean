@@ -28,11 +28,21 @@ fi
 
 ORIG_PWD=${PWD}
 
+if [ ! -d "boost_1_59_0" ]; then
+    echo "Requires boost_1_59_0 be present in ${PWD}"
+    exit 1
+fi
+
+if [ ! -d "boost_1_65_0" ]; then
+    echo "Requires boost_1_65_0 be present in ${PWD}"
+    exit 1
+fi
+
 mkdir ./${PROJECT}
 cd ./${PROJECT}
 
-ln -s `find ~/ -name boost_1_59_0 -type d | sort -n -s | tail -n 1`
-ln -s `find ~/ -name boost_1_65_0 -type d | sort -n -s | tail -n 1`
+ln -s ../boost_1_59_0
+ln -s ../boost_1_65_0
 
 git clone --recursive https://github.com/georgelorchpercona/myrocks &
 clone1=$!
