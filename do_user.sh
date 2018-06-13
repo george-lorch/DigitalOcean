@@ -36,6 +36,4 @@ echo -e "set expandtab\n" \
 "map <C-K> :py3f /usr/share/vim/addons/syntax/clang-format-60.py\n" \
 "imap <C-K> <c-o>:py3f /usr/share/vim/addons/syntax/clang-format-60.py\n" >> ~/.vimrc
 
-git-create-project $@
-
 cd ${ORIG_PWD}
