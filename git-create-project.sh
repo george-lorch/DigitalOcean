@@ -33,8 +33,8 @@ if [ ! -d "boost_1_59_0" ]; then
     exit 1
 fi
 
-if [ ! -d "boost_1_65_0" ]; then
-    echo "Requires boost_1_65_0 be present in ${PWD}"
+if [ ! -d "boost_1_66_0" ]; then
+    echo "Requires boost_1_66_0 be present in ${PWD}"
     exit 1
 fi
 
@@ -42,7 +42,7 @@ mkdir ./${PROJECT}
 cd ./${PROJECT}
 
 ln -s ../boost_1_59_0
-ln -s ../boost_1_65_0
+ln -s ../boost_1_66_0
 
 git clone --recursive https://github.com/georgelorchpercona/myrocks &
 clone1=$!
