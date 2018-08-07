@@ -14,4 +14,4 @@ if [ -z "$LIBEATMYDATA" ]; then
     exit 1
 fi
 
-LD_PRELOAD="${LIBEATMYDATA} ${LIBHOTBACKUP}" ./mtr --force --retry=0 --retry-failure=0 --max-test-fail=0 --testcase-timeout=30 --mysqld=--loose-tokudb-cache-size=512M --parallel=${cpus} $@
+LD_PRELOAD="${LIBEATMYDATA} ${LIBHOTBACKUP}" ./mtr --force --retry=0 --retry-failure=0 --max-test-fail=0 --testcase-timeout=120 --mysqld=--loose-tokudb-cache-size=512M --parallel=${cpus} $@
