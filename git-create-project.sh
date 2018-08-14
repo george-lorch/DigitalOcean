@@ -42,7 +42,9 @@ mkdir ./${PROJECT}
 cd ./${PROJECT}
 
 ln -s ../boost_1_59_0
+ln -s ../boost_1_65_0
 ln -s ../boost_1_66_0
+ln -s ../boost_1_67_0
 
 git clone --recursive https://github.com/georgelorchpercona/myrocks &
 clone1=$!
