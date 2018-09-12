@@ -13,7 +13,7 @@ eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
 
 sudo apt-get update
-sudo apt-get install -y fail2ban vim screen git make cmake gcc g++ libncurses5-dev libreadline-dev bison libz-dev libgcrypt20 libgcrypt20-dev libssl-dev libboost-all-dev valgrind python-mysqldb mdm clang
+sudo apt-get install -y fail2ban vim screen git make cmake gcc g++ libncurses5-dev libreadline-dev bison libz-dev libgcrypt20 libgcrypt20-dev libssl-dev libboost-all-dev valgrind python-mysqldb mdm clang libasan5
 
 ssh -o "StrictHostKeyChecking no" -T git@github.com
 git config --global user.email "george.lorch@percona.com"

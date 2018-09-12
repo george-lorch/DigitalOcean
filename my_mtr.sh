@@ -26,4 +26,4 @@ if [ $? -eq 0 ]; then
     PRELOAD="${LIBASAN}:${PRELOAD}"
 fi
 
-echo ./mtr --force --retry=0 --retry-failure=0 --max-test-fail=0 --testcase-timeout=120 --mysqld=--loose-tokudb-cache-size=512M --mysqld-env="LD_PRELOAD=${PRELOAD}" --parallel=${cpus} $@
+./mtr --force --retry=0 --retry-failure=0 --max-test-fail=0 --testcase-timeout=120 --mysqld=--loose-tokudb-cache-size=512M --mysqld-env="LD_PRELOAD=${PRELOAD}" --parallel=${cpus} $@
