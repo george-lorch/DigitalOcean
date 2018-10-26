@@ -75,17 +75,8 @@ console
 server-id=${SERVERID}
 max_connections=1000
 #plugin-load=TokuDB=ha_tokudb.so;TokuDB_trx=ha_tokudb.so;TokuDB_locks=ha_tokudb.so;TokuDB_lock_waits=ha_tokudb.so;TokuDB_file_map=ha_tokudb.so;TokuDB_fractal_tree_info=ha_tokudb.so;TokuDB_fractal_tree_block_map=ha_tokudb.so;TokuDB_background_job_status=ha_tokudb.so
-plugin-load=rocksdb=ha_rocksdb.so;rocksdb_cfstats=ha_rocksdb.so;rocksdb_dbstats=ha_rocksdb.so;rocksdb_perf_context=ha_rocksdb.so;rocksdb_perf_context_global=ha_rocksdb.so;rocksdb_cf_options=ha_rocksdb.so;rocksdb_compaction_stats=ha_rocksdb.so;rocksdb_global_info=ha_rocksdb.so;rocksdb_ddl=ha_rocksdb.so;rocksdb_index_file_map=ha_rocksdb.so;rocksdb_locks=ha_rocksdb.so;rocksdb_trx=ha_rocksdb.so
+#plugin-load=rocksdb=ha_rocksdb.so;rocksdb_cfstats=ha_rocksdb.so;rocksdb_dbstats=ha_rocksdb.so;rocksdb_perf_context=ha_rocksdb.so;rocksdb_perf_context_global=ha_rocksdb.so;rocksdb_cf_options=ha_rocksdb.so;rocksdb_compaction_stats=ha_rocksdb.so;rocksdb_global_info=ha_rocksdb.so;rocksdb_ddl=ha_rocksdb.so;rocksdb_index_file_map=ha_rocksdb.so;rocksdb_locks=ha_rocksdb.so;rocksdb_trx=ha_rocksdb.so
 #plugin-load=TokuDB=ha_tokudb.so;TokuDB_trx=ha_tokudb.so;TokuDB_locks=ha_tokudb.so;TokuDB_lock_waits=ha_tokudb.so;TokuDB_file_map=ha_tokudb.so;TokuDB_fractal_tree_info=ha_tokudb.so;TokuDB_fractal_tree_block_map=ha_tokudb.so;TokuDB_background_job_status=ha_tokudb.so;rocksdb=ha_rocksdb.so;rocksdb_cfstats=ha_rocksdb.so;rocksdb_dbstats=ha_rocksdb.so;rocksdb_perf_context=ha_rocksdb.so;rocksdb_perf_context_global=ha_rocksdb.so;rocksdb_cf_options=ha_rocksdb.so;rocksdb_compaction_stats=ha_rocksdb.so;rocksdb_global_info=ha_rocksdb.so;rocksdb_ddl=ha_rocksdb.so;rocksdb_index_file_map=ha_rocksdb.so;rocksdb_locks=ha_rocksdb.so;rocksdb_trx=ha_rocksdb.so
-#tokudb_fanout=4
-#tokudb_directio=on
-#tokudb_commit_sync=off
-#tokudb_cache_size=1G
-#tokudb_checkpointing_period=30
-#tokudb_fsync_log_period=1000
-#tokudb_block_size=8k
-#tokudb_read_block_size=1K
-#tokudb_cleaner_period=0
 EOF
 
 #for option in $@; do
@@ -95,15 +86,26 @@ EOF
 echo "Wrote out \"${DEFAULTSFILE}\" with contents:"
 cat ${DEFAULTSFILE}
 
+LIBASAN=$(find /usr/lib -name 'libasan.so' | sort | head -n 1)
+LIBEATMYDATA=$(find /usr/lib -name 'libeatmydata.so' | sort | head -n 1)
+LIBHOTBACKUP=$(find $(readlink -f ..) -type f -name 'libHotBackup.so')
+LIBJEMALLOC=$(find /usr/lib -name 'libjemalloc.so*' | sort | head -n 1)
+
+if [ -z "${LIBEATMYDATA}" ]; then
+    echo "****** NO LIBEATMYDATA FOUND ******"
+    exit 1
+fi
+PRELOAD="${LIBEATMYDATA}:${LIBJEMALLOC}"
+
 cat > ${GDBMYSQLD} <<EOF
 #!/bin/bash
-LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libjemalloc.so.1 ${BASEDIR}/lib/libHotBackup.so" gdb --args ${BASEDIR}/bin/mysqld --defaults-file=${DEFAULTSFILE} --loose-tokudb-check-jemalloc=no \$@
+LD_PRELOAD="${PRELOAD}" gdb --args ${BASEDIR}/bin/mysqld --defaults-file=${DEFAULTSFILE} --loose-tokudb-check-jemalloc=no \$@
 EOF
 chmod +x ${GDBMYSQLD}
 
 cat > ${RUNMYSQLD} <<EOF
 #!/bin/bash
-LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libjemalloc.so.1 ${BASEDIR}/lib/libHotBackup.so" ${BASEDIR}/bin/mysqld --defaults-file=${DEFAULTSFILE} --loose-tokudb-check-jemalloc=no \$@
+LD_PRELOAD="${PRELOAD}" ${BASEDIR}/bin/mysqld --defaults-file=${DEFAULTSFILE} --loose-tokudb-check-jemalloc=no \$@
 EOF
 chmod +x ${RUNMYSQLD}
 
