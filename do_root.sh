@@ -36,6 +36,9 @@ mkdir ${my_user_dir}/bin
 for cmd in `find ${my_user_dir}/do -name "*.sh"`; do
     ln -s $cmd ${my_user_dir}/bin
 done
+for cmd in `find ${my_user_dir}/do -name "*.py"`; do
+    ln -s $cmd ${my_user_dir}/bin
+done
 
 own ${my_user_dir}/bin
 own ${my_user_dir}/bin/*
