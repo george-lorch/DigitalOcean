@@ -51,6 +51,7 @@ ln -s ../boost_1_59_0
 ln -s ../boost_1_65_0
 ln -s ../boost_1_66_0
 ln -s ../boost_1_67_0
+wget https://llvm.org/svn/llvm-project/cfe/trunk/tools/clang-format/clang-format-diff.py
 
 unset pids;
 pid_idx=1
