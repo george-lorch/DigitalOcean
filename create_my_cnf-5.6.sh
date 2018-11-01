@@ -99,7 +99,7 @@ chmod +x ${GDBMYSQLD}
 
 cat > ${RUNMYSQLD} <<EOF
 #!/bin/bash
-LD_PRELOAD="${PRELOAD}" ${BASEDIR}/lib/libHotBackup.so" ${BASEDIR}/bin/mysqld --defaults-file=${DEFAULTSFILE} --loose-tokudb-check-jemalloc=no \$@
+LD_PRELOAD="${PRELOAD}" ${BASEDIR}/bin/mysqld --defaults-file=${DEFAULTSFILE} --loose-tokudb-check-jemalloc=no \$@
 EOF
 chmod +x ${RUNMYSQLD}
 

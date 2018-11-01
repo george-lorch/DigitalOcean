@@ -83,15 +83,26 @@ done
 echo "Wrote out \"${DEFAULTSFILE}\" with contents:"
 cat ${DEFAULTSFILE}
 
+LIBASAN=$(find /usr/lib -name 'libasan.so' | sort | head -n 1)
+LIBEATMYDATA=$(find /usr/lib -name 'libeatmydata.so' | sort | head -n 1)
+iLIBHOTBACKUP=$(find $(readlink -f ..) -type f -name 'libHotBackup.so')
+LIBJEMALLOC=$(find /usr/lib -name 'libjemalloc.so*' | sort | head -n 1)
+
+if [ -z "${LIBEATMYDATA}" ]; then
+    echo "****** NO LIBEATMYDATA FOUND ******"
+    exit 1
+fi
+PRELOAD="${LIBEATMYDATA}:${LIBJEMALLOC}"
+
 cat > ${GDBMYSQLD} <<EOF
 #!/bin/bash
-LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libjemalloc.so.1 ${BASEDIR}/lib/libHotBackup.so" gdb --args ${BASEDIR}/bin/mysqld --defaults-file=${DEFAULTSFILE} \$@
+LD_PRELOAD="${PRELOAD}" gdb --args ${BASEDIR}/bin/mysqld --defaults-file=${DEFAULTSFILE} \$@
 EOF
 chmod +x ${GDBMYSQLD}
 
 cat > ${RUNMYSQLD} <<EOF
 #!/bin/bash
-LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libjemalloc.so.1 ${BASEDIR}/lib/libHotBackup.so" ${BASEDIR}/bin/mysqld --defaults-file=${DEFAULTSFILE} \$@
+LD_PRELOAD="${PRELOAD}" ${BASEDIR}/bin/mysqld --defaults-file=${DEFAULTSFILE} \$@
 EOF
 chmod +x ${RUNMYSQLD}
 
