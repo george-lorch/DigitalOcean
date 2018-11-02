@@ -103,7 +103,7 @@ cd -
 
 cd ../${PROJECT}/percona-server-5.7
 git remote add downstream ${PROTOCOL}georgelorchpercona/percona-server
-git remote add local-5.7 ../percona-server-5.6
+git remote add local-5.6 ../percona-server-5.6
 git remote add local-8.0 ../percona-server-8.0
 git remote add local-fb ../facebook-mysql
 cd -
