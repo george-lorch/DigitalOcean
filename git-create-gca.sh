@@ -12,7 +12,7 @@ finished() {
     exit 0
 }
 
-SERIES=( "5.6" "5.7" )
+SERIES=( "5.6" "5.7" "8.0" )
 FEATURE=$1
 VERSION=$2
 
@@ -69,12 +69,12 @@ for i in $(seq ${SERIES_TOP} -1 1); do
     #commit=$(git merge-base ${HIGHEST_VERSION} ${lower_version})
     commit=$(git rev-list --topo-order --first-parent ${lower_version} ^${HIGHEST_VERSION} | tail -1)
     if [ -z "$commit" ] ; then
-        commit=${lower_version}
+        commit=$(git rev-parse ${lower_version}^)
     else
         commit=$(git rev-parse ${commit}^)
     fi
     latest_commit=$(git log -n 1 --pretty=format:"%H" ${lower_version})
-    echo "GCA for ${HIGHEST_VERSION} and ${lower_version} is ${commit}, latest commit for ${lower_version} is ${latest_commit}"
+    echo "GCA for ${SERIES[${i}]} and ${lower_version} is ${commit}, latest commit for ${lower_version} is ${latest_commit}"
     git checkout ${lower_version}
     if [ "${VERSION}" = "${lower_version}" ]; then
         git checkout -b ps-${lower_version}-${FEATURE} ${commit}
