@@ -51,6 +51,7 @@ ln -s ../boost_1_59_0
 ln -s ../boost_1_65_0
 ln -s ../boost_1_66_0
 ln -s ../boost_1_67_0
+ln -s ../boost_1_68_0
 
 unset pids;
 pid_idx=1
