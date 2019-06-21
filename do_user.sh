@@ -33,6 +33,10 @@ rm boost_1_67_0.tar.gz
 wget http://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz
 tar -xzf boost_1_68_0.tar.gz
 rm boost_1_68_0.tar.gz
+wget http://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz
+tar -xzf boost_1_69_0.tar.gz
+rm boost_1_69_0.tar.gz
+
 
 
 echo -e "set expandtab\n" \
