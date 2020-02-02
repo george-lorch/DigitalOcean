@@ -55,7 +55,8 @@ done
 
 for series in ${SERIES}; do
     git checkout ${series}
-    git pull
+    git branch --set-upstream-to=origin/${series}
+    git pull origin ${series}
 done
 git checkout ${HIGHEST_VERSION}
 if [ "${VERSION}" = "${HIGHEST_VERSION}" ]; then
